@@ -1,7 +1,18 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Cart from './pages/Cart';
+import Homepage from './pages/Homepage';
+import Order from './pages/Order';
+
 function App() {
     return (
         <>
-            <button className='btn btn-primary'>click me</button>
+            <Router>
+                <Routes>
+                    <Route path='/' element={<Homepage />} />
+                    <Route path='/cart' element={<Cart />} />
+                    <Route path='/order' element={<Order />} />
+                </Routes>
+            </Router>
         </>
     );
 }
