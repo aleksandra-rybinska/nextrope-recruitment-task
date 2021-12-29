@@ -15,11 +15,3 @@ export type FormType = {
     city: string;
     zipCode: string;
 }
-
-export type SubmitType = {
-    order: [{ id: string; quantity: string }],
-    firstName: string;
-    lastName: string;
-    city: string;
-    zipCode: string;
-};

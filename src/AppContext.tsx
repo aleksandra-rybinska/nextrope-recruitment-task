@@ -1,26 +1,29 @@
 import React, { createContext, useContext } from 'react';
 import { useQuery } from 'react-query';
-import { BookType, SubmitType } from './types/index';
+import { BookType } from './types/index';
 import { useLocalStorage } from './useLocalStorage';
 
-const AppContext = createContext<any>({});
-
 type AppProviderValue = {
-    books?: BookType;
+    books?: BookType[];
     status: string;
     cart: [] | BookType[];
     addToCart: (clickedBook: BookType) => void;
     removeFromCart: (id: number) => void;
 };
 
-const getProducts = async (): Promise<{}> =>
+const AppContext = createContext<any>({});
+
+const getProducts = async (): Promise<{ data: BookType[] }> =>
     await (await fetch('http://localhost:3001/api/book')).json();
 
-export const AppProvider = ({ children }: any) => {
-    const { data, status } = useQuery<any>('products', getProducts);
+export const AppProvider: React.FC = ({ children }) => {
+    const { data, status } = useQuery<{ data: BookType[] }, Error>(
+        'products',
+        getProducts
+    );
     const books = data?.data;
 
-    const [cart, setCart] = useLocalStorage('cart', [] as BookType[]);
+    const [cart, setCart] = useLocalStorage<BookType[]>('cart', []);
 
     const addToCart = (clickedBook: BookType) => {
         setCart((prev) => {

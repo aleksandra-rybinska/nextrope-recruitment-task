@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useBooks } from '../AppContext';
-import { FormType, SubmitType } from '../types';
+import { FormType } from '../types';
 
 const Order: React.FC = () => {
     const initState: FormType = {
