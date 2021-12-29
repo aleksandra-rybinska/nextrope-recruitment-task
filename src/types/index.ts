@@ -5,4 +5,5 @@ export type BookType = {
     cover_url: string;
     pages: number;
     currency: string;
+    amount: number;
 };

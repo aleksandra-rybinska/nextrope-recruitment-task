@@ -7,6 +7,8 @@ const AppContext = createContext<any>({});
 type AppProviderValue = {
     books?: BookType;
     status: string;
+    cart: [] | BookType[];
+    addToCart: (clickedBook: BookType) => void;
 };
 
 const getProducts = async (): Promise<{}> =>
@@ -16,9 +18,29 @@ export const AppProvider = ({ children }: any) => {
     const { data, status } = useQuery<any>('products', getProducts);
     const books = data?.data;
 
+    const [cart, setCart] = useState([] as BookType[]);
+
+    const addToCart = (clickedBook: BookType) => {
+        setCart((prev) => {
+            const isBookInCart = prev.find(
+                (book) => book.id === clickedBook.id
+            );
+            if (isBookInCart) {
+                return prev.map((book) =>
+                    book.id === clickedBook.id
+                        ? { ...book, amount: book.amount + 1 }
+                        : book
+                );
+            }
+            return [...prev, { ...clickedBook, amount: 1 }];
+        });
+    };
+
     const value: AppProviderValue = {
         books,
         status,
+        cart,
+        addToCart,
     };
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

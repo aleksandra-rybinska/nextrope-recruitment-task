@@ -1,16 +1,26 @@
+import { Link } from 'react-router-dom';
 import { useBooks } from '../AppContext';
 import { BookType } from '../types';
 
 const Homepage: React.FC = () => {
-    const { books, status } = useBooks();
-    console.log('books', books);
-    console.log('status', status);
+    const { books, status, cart, addToCart } = useBooks();
+
+    console.log('koszyk!!!!', cart);
 
     return (
         <div>
             {status === 'loading' && <div>Ładowanie danych...</div>}
             {status === 'error' && <div>Błąd pobierania danych</div>}
-            <h1 className='mx-4'>Strona główna</h1>
+            <div className='d-flex mt-2 p-2 justify-content-between'>
+                <h1 className='mx-4'>Strona główna</h1>
+                <div>
+                    <Link
+                        to='/cart'
+                        className='btn btn-primary position-relative mx-sm-4'>
+                        Koszyk
+                    </Link>
+                </div>
+            </div>
             {status === 'success' && (
                 <div className='row mx-3'>
                     {books.map((book: BookType) => (
@@ -25,7 +35,9 @@ const Homepage: React.FC = () => {
                                     <h5 className='card-title'>{book.title}</h5>
                                     <p className='card-text'>{book.author}</p>
                                     <p className='card-text'>{book.pages}</p>
-                                    <button className='btn btn-secondary'>
+                                    <button
+                                        className='btn btn-secondary'
+                                        onClick={() => addToCart(book)}>
                                         dodaj do koszyka
                                     </button>
                                 </div>
