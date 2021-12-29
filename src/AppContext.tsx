@@ -1,6 +1,7 @@
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useQuery } from 'react-query';
 import { BookType } from './types/index';
+import { useLocalStorage } from './useLocalStorage';
 
 const AppContext = createContext<any>({});
 
@@ -18,7 +19,7 @@ export const AppProvider = ({ children }: any) => {
     const { data, status } = useQuery<any>('products', getProducts);
     const books = data?.data;
 
-    const [cart, setCart] = useState([] as BookType[]);
+    const [cart, setCart] = useLocalStorage('cart', [] as BookType[]);
 
     const addToCart = (clickedBook: BookType) => {
         setCart((prev) => {
