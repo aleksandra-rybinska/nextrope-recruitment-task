@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FormType } from '../types';
 const Order: React.FC = () => {
@@ -10,6 +10,17 @@ const Order: React.FC = () => {
     };
 
     const [formFields, setFormFields] = useState(initState);
+
+    const updateField = (event: React.SyntheticEvent): void => {
+        const { name, value } = event.target as HTMLInputElement;
+
+        setFormFields({
+            ...formFields,
+            [name]: value,
+        });
+    };
+
+    console.log('form', formFields);
     return (
         <div>
             <div className='d-flex flex-column flex-md-row mt-2 align-items-center justify-content-between'>
@@ -29,19 +40,31 @@ const Order: React.FC = () => {
                 <form>
                     <div className='d-flex flex-column mb-2'>
                         <label>Imię</label>
-                        <input name='firstName' type='text' />
+                        <input
+                            name='firstName'
+                            type='text'
+                            onChange={updateField}
+                        />
                     </div>
                     <div className='d-flex flex-column mb-2'>
                         <label>Nazwisko</label>
-                        <input name='lastName' type='text' />
+                        <input
+                            name='lastName'
+                            type='text'
+                            onChange={updateField}
+                        />
                     </div>
                     <div className='d-flex flex-column mb-2'>
                         <label>Miejscowość</label>
-                        <input name='city' type='text' />
+                        <input name='city' type='text' onChange={updateField} />
                     </div>
                     <div className='d-flex flex-column mb-2'>
                         <label>Kod pocztowy</label>
-                        <input name='zipCode' type='text' />
+                        <input
+                            name='zipCode'
+                            type='text'
+                            onChange={updateField}
+                        />
                     </div>
                     <button className='btn btn-success'>
                         ZAMAWIAM I PŁACĘ
