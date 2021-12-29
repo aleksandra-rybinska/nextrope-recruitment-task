@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useBooks } from '../AppContext';
 import { BookType } from '../types';
 
@@ -7,7 +8,17 @@ const Cart: React.FC = () => {
 
     return (
         <div>
-            <h1 className='mt-2 mx-4'>Koszyk</h1>
+            <div className='d-flex mt-2 align-items-center justify-content-between'>
+                <h1 className='mx-4'>Koszyk</h1>
+                <div className='mx-4'>
+                    <Link to='/order' className='btn btn-primary mx-sm-2'>
+                        DALEJ
+                    </Link>
+                    <Link to='/' className='btn btn-primary mx-sm-2'>
+                        Strona główna
+                    </Link>
+                </div>
+            </div>
             {cart.length === 0 && <h4 className='mx-4'>koszyk jest pusty</h4>}
             {cart.length > 0 &&
                 cart.map((book: BookType) => (
