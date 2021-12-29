@@ -10,6 +10,7 @@ type AppProviderValue = {
     status: string;
     cart: [] | BookType[];
     addToCart: (clickedBook: BookType) => void;
+    removeFromCart: (id: number) => void;
 };
 
 const getProducts = async (): Promise<{}> =>
@@ -37,11 +38,25 @@ export const AppProvider = ({ children }: any) => {
         });
     };
 
+    const removeFromCart = (id: number) => {
+        setCart((old) =>
+            old.reduce((acc, book) => {
+                if (book.id === id) {
+                    if (book.amount === 1) return acc;
+                    return [...acc, { ...book, amount: book.amount - 1 }];
+                } else {
+                    return [...acc, book];
+                }
+            }, [] as BookType[])
+        );
+    };
+
     const value: AppProviderValue = {
         books,
         status,
         cart,
         addToCart,
+        removeFromCart,
     };
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

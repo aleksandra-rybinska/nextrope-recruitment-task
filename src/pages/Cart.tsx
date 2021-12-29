@@ -3,7 +3,7 @@ import { useBooks } from '../AppContext';
 import { BookType } from '../types';
 
 const Cart: React.FC = () => {
-    const { cart } = useBooks();
+    const { cart, addToCart, removeFromCart } = useBooks();
 
     return (
         <div>
@@ -36,11 +36,15 @@ const Cart: React.FC = () => {
                             <div className='card-body mx-4 d-flex flex-column align-items-center'>
                                 <p>ilość sztuk w koszyku:</p>
                                 <div className='d-flex align-items-baseline gap-4'>
-                                    <button className='btn btn-outline-secondary'>
+                                    <button
+                                        className='btn btn-outline-secondary'
+                                        onClick={() => removeFromCart(book.id)}>
                                         -
                                     </button>
                                     <h4>{book.amount}</h4>
-                                    <button className='btn btn-outline-secondary'>
+                                    <button
+                                        className='btn btn-outline-secondary'
+                                        onClick={() => addToCart(book)}>
                                         +
                                     </button>
                                 </div>
