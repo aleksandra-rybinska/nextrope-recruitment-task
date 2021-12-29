@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import { useQuery } from 'react-query';
-import { BookType } from './types/index';
+import { BookType, SubmitType } from './types/index';
 import { useLocalStorage } from './useLocalStorage';
 
 const AppContext = createContext<any>({});
@@ -30,11 +30,11 @@ export const AppProvider = ({ children }: any) => {
             if (isBookInCart) {
                 return prev.map((book) =>
                     book.id === clickedBook.id
-                        ? { ...book, amount: book.amount + 1 }
+                        ? { ...book, quantity: book.quantity + 1 }
                         : book
                 );
             }
-            return [...prev, { ...clickedBook, amount: 1 }];
+            return [...prev, { ...clickedBook, quantity: 1 }];
         });
     };
 
@@ -42,8 +42,8 @@ export const AppProvider = ({ children }: any) => {
         setCart((old) =>
             old.reduce((acc, book) => {
                 if (book.id === id) {
-                    if (book.amount === 1) return acc;
-                    return [...acc, { ...book, amount: book.amount - 1 }];
+                    if (book.quantity === 1) return acc;
+                    return [...acc, { ...book, quantity: book.quantity - 1 }];
                 } else {
                     return [...acc, book];
                 }

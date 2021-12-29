@@ -5,7 +5,7 @@ import { BookType } from '../types';
 const Homepage: React.FC = () => {
     const { books, status, cart, addToCart } = useBooks();
     const getTotalItems = (books: BookType[]) =>
-        books.reduce((ack: number, book) => ack + book.amount, 0);
+        books.reduce((ack: number, book) => ack + book.quantity, 0);
 
     return (
         <div>

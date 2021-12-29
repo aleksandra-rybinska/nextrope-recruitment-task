@@ -6,7 +6,7 @@ export type BookType = {
     cover_url: string;
     pages: number;
     currency: string;
-    amount: number;
+    quantity: number;
 };
 
 export type FormType = {
@@ -15,3 +15,11 @@ export type FormType = {
     city: string;
     zipCode: string;
 }
+
+export type SubmitType = {
+    order: [{ id: string; quantity: string }],
+    firstName: string;
+    lastName: string;
+    city: string;
+    zipCode: string;
+};

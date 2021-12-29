@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FormType } from '../types';
+import { useBooks } from '../AppContext';
+import { FormType, SubmitType } from '../types';
+
 const Order: React.FC = () => {
     const initState: FormType = {
         firstName: '',
@@ -8,6 +10,8 @@ const Order: React.FC = () => {
         city: '',
         zipCode: '',
     };
+
+    const { cart } = useBooks();
 
     const [formFields, setFormFields] = useState(initState);
 
@@ -20,7 +24,28 @@ const Order: React.FC = () => {
         });
     };
 
-    console.log('form', formFields);
+    const handleSubmit = (event: React.SyntheticEvent): void => {
+        event.preventDefault();
+
+        fetch('http://localhost:3001/api/order', {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify({
+                ...formFields,
+                // @ts-ignore
+                order: cart.map(({ id, quantity }) => ({ id, quantity })),
+            }),
+        });
+
+        alert('zamówienie przyjęte do realizacji');
+
+        // console.log('submited', {
+        //     ...formFields,
+        //     // @ts-ignore
+        //     order: cart.map(({ id, quantity }) => ({ id, quantity })),
+        // } as SubmitType);
+    };
+
     return (
         <div>
             <div className='d-flex flex-column flex-md-row mt-2 align-items-center justify-content-between'>
@@ -37,7 +62,7 @@ const Order: React.FC = () => {
             <div className='col-10 col-md-8 offset-1 offset-md-2 mt-4'>
                 <h4>Formularz zamówenia</h4>
 
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className='d-flex flex-column mb-2'>
                         <label>Imię</label>
                         <input
@@ -66,7 +91,7 @@ const Order: React.FC = () => {
                             onChange={updateField}
                         />
                     </div>
-                    <button className='btn btn-success'>
+                    <button type='submit' className='btn btn-success'>
                         ZAMAWIAM I PŁACĘ
                     </button>
                 </form>

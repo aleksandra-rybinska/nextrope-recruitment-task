@@ -52,7 +52,7 @@ const Cart: React.FC = () => {
                                         onClick={() => removeFromCart(book.id)}>
                                         -
                                     </button>
-                                    <h4>{book.amount}</h4>
+                                    <h4>{book.quantity}</h4>
                                     <button
                                         className='btn btn-outline-secondary'
                                         onClick={() => addToCart(book)}>
