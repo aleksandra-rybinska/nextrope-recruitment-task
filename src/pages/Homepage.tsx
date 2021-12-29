@@ -7,8 +7,6 @@ const Homepage: React.FC = () => {
     const getTotalItems = (books: BookType[]) =>
         books.reduce((ack: number, book) => ack + book.amount, 0);
 
-    console.log('koszyk!!!!', cart);
-
     return (
         <div>
             {status === 'loading' && <div>Ładowanie danych...</div>}
@@ -43,8 +41,12 @@ const Homepage: React.FC = () => {
                                 />
                                 <div className='card-body'>
                                     <h5 className='card-title'>{book.title}</h5>
-                                    <p className='card-text'>{book.author}</p>
-                                    <p className='card-text'>{book.pages}</p>
+                                    <p className='card-text'>
+                                        autorzy: &nbsp;{book.author}
+                                    </p>
+                                    <p className='card-text'>
+                                        liczba stron: &nbsp;{book.pages}
+                                    </p>
                                     <button
                                         className='btn btn-secondary'
                                         onClick={() => addToCart(book)}>
