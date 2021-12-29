@@ -8,3 +8,10 @@ export type BookType = {
     currency: string;
     amount: number;
 };
+
+export type FormType = {
+    firstName: string;
+    lastName: string;
+    city: string;
+    zipCode: string;
+}

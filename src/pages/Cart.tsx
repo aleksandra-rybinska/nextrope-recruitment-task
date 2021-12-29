@@ -8,9 +8,9 @@ const Cart: React.FC = () => {
 
     return (
         <div>
-            <div className='d-flex mt-2 align-items-center justify-content-between'>
+            <div className='d-flex flex-column flex-md-row mt-2 align-items-center justify-content-between'>
                 <h1 className='mx-4'>Koszyk</h1>
-                <div className='mx-4'>
+                <div className='mx-4 d-flex justify-content-evenly gap-2'>
                     <Link to='/order' className='btn btn-primary mx-sm-2'>
                         DALEJ
                     </Link>
