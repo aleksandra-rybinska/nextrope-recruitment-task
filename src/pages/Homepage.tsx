@@ -4,6 +4,8 @@ import { BookType } from '../types';
 
 const Homepage: React.FC = () => {
     const { books, status, cart, addToCart } = useBooks();
+    const getTotalItems = (books: BookType[]) =>
+        books.reduce((ack: number, book) => ack + book.amount, 0);
 
     console.log('koszyk!!!!', cart);
 
@@ -18,6 +20,14 @@ const Homepage: React.FC = () => {
                         to='/cart'
                         className='btn btn-primary position-relative mx-sm-4'>
                         Koszyk
+                        {cart.length > 0 && (
+                            <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                                {getTotalItems(cart)}
+                                <span className='visually-hidden'>
+                                    unread messages
+                                </span>
+                            </span>
+                        )}
                     </Link>
                 </div>
             </div>
