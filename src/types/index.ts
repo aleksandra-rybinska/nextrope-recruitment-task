@@ -15,3 +15,5 @@ export type FormType = {
     city: string;
     zipCode: string;
 }
+
+export type ValidateConditionsType = 'firstName' | 'lastName' | 'city' | 'zipCode';

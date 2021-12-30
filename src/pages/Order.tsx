@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useBooks } from '../AppContext';
 import ValidationMessage from '../components/ValidationMessage';
-import { FormType } from '../types';
+import { FormType, ValidateConditionsType } from '../types';
 
 const Order: React.FC = () => {
     const initState: FormType = {
@@ -24,30 +24,33 @@ const Order: React.FC = () => {
     const [formFields, setFormFields] = useState(initState);
     const [errors, setErrors] = useState(initErrors);
 
-    const validateConditions = {
+    const validateConditions: Record<
+        ValidateConditionsType,
+        (value: string) => boolean
+    > = {
         firstName: (value: string): boolean => value.length > 2,
         lastName: (value: string): boolean => value.length > 2,
         city: (value: string): boolean => value.length > 2,
         zipCode: (value: string): boolean => value.length === 5,
     };
 
-    const updateField = (event: React.SyntheticEvent): void => {
-        const { name, value } = event.target as HTMLInputElement;
-        // @ts-ignore
-        if (validateConditions[name](value) === false) {
+    const updateField = ({ target }: { target: HTMLInputElement }): void => {
+        const { name, value } = target;
+
+        if (!validateConditions[name as ValidateConditionsType](value)) {
             setErrors((prev) => ({
                 ...prev,
                 [name]: true,
             }));
-            // @ts-ignore
-            event.target.style.border = '1px solid red';
+
+            target.style.border = '1px solid red';
         } else {
             setErrors((prev) => ({
                 ...prev,
                 [name]: false,
             }));
-            // @ts-ignore
-            event.target.style.border = '1px solid grey';
+
+            target.style.border = '1px solid grey';
         }
 
         setFormFields({
@@ -99,6 +102,7 @@ const Order: React.FC = () => {
                         <input
                             name='firstName'
                             type='text'
+                            required
                             onChange={updateField}
                         />
                         {errors.firstName && (
@@ -112,6 +116,7 @@ const Order: React.FC = () => {
                         <input
                             name='lastName'
                             type='text'
+                            required
                             onChange={updateField}
                         />
                         {errors.lastName && (
@@ -122,7 +127,12 @@ const Order: React.FC = () => {
                     </div>
                     <div className='d-flex flex-column mb-2'>
                         <label>Miejscowość</label>
-                        <input name='city' type='text' onChange={updateField} />
+                        <input
+                            name='city'
+                            type='text'
+                            required
+                            onChange={updateField}
+                        />
                         {errors.city && (
                             <ValidationMessage
                                 message={'Miejscowość jest za krótka'}
@@ -134,6 +144,7 @@ const Order: React.FC = () => {
                         <input
                             name='zipCode'
                             type='number'
+                            required
                             onChange={updateField}
                         />
                         {errors.zipCode && (
