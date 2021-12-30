@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useBooks } from '../AppContext';
+import ValidationMessage from '../components/ValidationMessage';
 import { FormType } from '../types';
 
 const Order: React.FC = () => {
@@ -101,7 +102,9 @@ const Order: React.FC = () => {
                             onChange={updateField}
                         />
                         {errors.firstName && (
-                            <p style={{ color: 'red' }}>Imię jest za krótkie</p>
+                            <ValidationMessage
+                                message={'Imię jest za krótkie'}
+                            />
                         )}
                     </div>
                     <div className='d-flex flex-column mb-2'>
@@ -112,18 +115,18 @@ const Order: React.FC = () => {
                             onChange={updateField}
                         />
                         {errors.lastName && (
-                            <p style={{ color: 'red' }}>
-                                Nazwisko jest za krótkie
-                            </p>
+                            <ValidationMessage
+                                message={'Nazwisko jest za krótkie'}
+                            />
                         )}
                     </div>
                     <div className='d-flex flex-column mb-2'>
                         <label>Miejscowość</label>
                         <input name='city' type='text' onChange={updateField} />
                         {errors.city && (
-                            <p style={{ color: 'red' }}>
-                                Miejscowość jest za krótka
-                            </p>
+                            <ValidationMessage
+                                message={'Miejscowość jest za krótka'}
+                            />
                         )}
                     </div>
                     <div className='d-flex flex-column mb-2'>
@@ -134,9 +137,9 @@ const Order: React.FC = () => {
                             onChange={updateField}
                         />
                         {errors.zipCode && (
-                            <p style={{ color: 'red' }}>
-                                Wpisz 5 cyfr kodu pocztowego
-                            </p>
+                            <ValidationMessage
+                                message={'Wpisz 5 cyfr kodu pocztowego'}
+                            />
                         )}
                     </div>
                     <button type='submit' className='btn btn-success'>
