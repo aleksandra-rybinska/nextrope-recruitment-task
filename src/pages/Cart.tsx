@@ -11,9 +11,12 @@ const Cart: React.FC = () => {
             <div className='d-flex flex-column flex-md-row mt-2 align-items-center justify-content-between'>
                 <h1 className='mx-4'>Koszyk</h1>
                 <div className='mx-4 d-flex justify-content-evenly gap-2'>
-                    <Link to='/order' className='btn btn-primary mx-sm-2'>
-                        DALEJ
-                    </Link>
+                    {cart.length > 0 && (
+                        <Link to='/order' className='btn btn-primary mx-sm-2'>
+                            DALEJ
+                        </Link>
+                    )}
+
                     <Link to='/' className='btn btn-primary mx-sm-2'>
                         Strona główna
                     </Link>
